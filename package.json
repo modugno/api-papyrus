@@ -1,0 +1,25 @@
+{
+  "name": "itau-frontend-test",
+  "version": "1.0.0",
+  "description": "Itaú front-end test",
+  "main": "server.js",
+  "scripts": {
+    "prestart": "npm i",
+    "dev": "nodemon --watch server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guilherme Modugno <modugnoguilherme@gmail.com> (https://modugno.github.io/)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-status": "^1.4.2",
+    "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
