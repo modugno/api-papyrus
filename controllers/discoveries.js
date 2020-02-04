@@ -1,71 +1,41 @@
 const repository = require('../repository/discovery-repository');
 const httpStatus = require('http-status');
-const { responseSuccess, responseError } = require('../utils/response');
+const { catchAsync } = require('../utils/error');
 
-exports.get = (req, res) => {
-  repository.getAll()
-  .then((data) => {
-    res.status(httpStatus.OK).send(responseSuccess({ data, status: httpStatus.OK }));
-  })
-  .catch((error) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(
-      responseError({ error, status: httpStatus.INTERNAL_SERVER_ERROR })
-    );
-  });
-};
+exports.get = catchAsync(async(req, res, next) => {
+  const result = await repository.getAll();
+  res.status(httpStatus.OK).json(
+    { result, status: httpStatus.OK }
+  );
+});
 
-exports.getById = (req, res) => {
+exports.getById = catchAsync(async(req, res, next) => {
   const { id } = req.params;
+  const result = await repository.getById(id);
+  res.status(httpStatus.OK).json(
+    { result, status: httpStatus.OK }
+  );
+});
 
-  repository.getById(id)
-  .then((data) => {
-    res.status(httpStatus.OK).send(responseSuccess({ data, status: httpStatus.OK }));
-  })
-  .catch((error) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(
-      responseError({ error, status: httpStatus.INTERNAL_SERVER_ERROR })
-    );
-  });
+exports.create = catchAsync(async(req, res, next) => {
+  const result = await repository.create(req.body)
+  res.status(httpStatus.CREATED).json(
+    { result, status: httpStatus.CREATED }
+  );
+});
 
-};
-
-exports.create = (req, res) => {
-  // do something
-  repository.create(req.body)
-  .then((data) => {
-    res.status(httpStatus.CREATED).send(responseSuccess({ data, status: httpStatus.CREATED }));
-  })
-  .catch((error) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(
-      responseError({ error, status: httpStatus.INTERNAL_SERVER_ERROR })
-    );
-  });
-};
-
-exports.update = (req, res) => {
+exports.update = catchAsync(async(req, res, next) => {
   const { id } = req.params;
+  const result = await repository.update({ id, data: req.body })
+  res.status(httpStatus.OK).json(
+    { result, status: httpStatus.OK }
+  );
+});
 
-  repository.update({ id, data: req.body })
-  .then((data) => {
-    res.status(httpStatus.OK).send(responseSuccess({ data, status: httpStatus.OK }));
-  })
-  .catch((error) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(
-      responseError({ error, status: httpStatus.INTERNAL_SERVER_ERROR })
-    );
-  });
-};
-
-exports.delete = (req, res) => {
+exports.delete = catchAsync(async(req, res, next) => {
   const { id } = req.params;
-
-  repository.delete(id)
-  .then((data) => {
-    res.status(httpStatus.OK).send(responseSuccess({ data, status: httpStatus.OK }));
-  })
-  .catch((error) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(
-      responseError({ error, status: httpStatus.INTERNAL_SERVER_ERROR })
-    );
-  });
-};
+  const result = await repository.delete(id)
+  res.status(httpStatus.OK).json(
+    { result, status: httpStatus.OK }
+  );
+});

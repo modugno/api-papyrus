@@ -1,2 +1,2 @@
-exports.responseSuccess = ({ data, status }) => ({ result: data, status });
+exports.responseSuccess = ({ result, status }) => ({ result: data, status });
 exports.responseError = ({ error, status }) => ({ error, status })
