@@ -3,12 +3,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const httpStatus = require('http-status');
 const { wrapperHandleError } = require('./utils/error');
-const HandleError = require('./controllers/handle-error');
-
-require('dotenv').config({ path: 'config.env' });
+const HandleError = require('./utils/handle-error');
 const { PREFIX, port } = require('./config/api-config');
 const commentsRoutes = require('./routes/comments-routes');
 const discoveriesRoutes = require('./routes/discoveries-routes');
+require('dotenv').config({ path: 'config.env' });
 
 const db = require('./config/db');
 db.connection(process.env.DATABASE);
